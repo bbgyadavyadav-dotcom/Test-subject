@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <script src="lib/gsap.min.js"></script>
+    <style>
+      :root {
+        --parchment: #e9dab4;
+        --cream: #f7efdb;
+        --ink: #3a2c17;
+        --gold: #e8b34b;
+        --gold-bright: #ffd97a;
+        --rust: #8a2f23;
+        --font-display: Georgia, "DejaVu Serif", serif;
+      }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body {
+        margin: 0; width: 1920px; height: 1080px; overflow: hidden; background: #000;
+      }
+      #root { position: relative; width: 1920px; height: 1080px; overflow: hidden; background: #000; }
+      .clip { position: absolute; inset: 0; width: 1920px; height: 1080px; overflow: hidden; }
+      .cam { position: absolute; inset: 0; width: 1920px; height: 1080px; will-change: transform; }
+      .cam img.bg { width: 1920px; height: 1080px; display: block; }
+      .layer { position: absolute; display: block; will-change: transform; }
+
+      /* ---------- title card ---------- */
+      #titlecard {
+        position: absolute; inset: 0; display: flex; flex-direction: column;
+        align-items: center; justify-content: flex-start; padding-top: 104px;
+        pointer-events: none; z-index: 40;
+        background: radial-gradient(ellipse 62% 40% at 50% 24%, rgba(22, 15, 6, .42), rgba(22, 15, 6, 0) 70%);
+      }
+      #titlecard .over {
+        font-family: var(--font-display); color: var(--gold-bright); font-size: 33px;
+        letter-spacing: 14px; margin-bottom: 14px; text-shadow: 0 4px 18px rgba(0,0,0,.6);
+      }
+      #titlecard .main {
+        font-family: var(--font-display); color: var(--cream); font-size: 116px; font-weight: 700;
+        letter-spacing: 8px; text-shadow: 0 10px 42px rgba(0,0,0,.65);
+      }
+      #titlecard .rule {
+        width: 430px; height: 3px; background: var(--gold); opacity: .85; margin: 20px 0 16px;
+        box-shadow: 0 2px 10px rgba(0,0,0,.5);
+      }
+      #titlecard .sub {
+        font-family: var(--font-display); color: var(--gold-bright); font-size: 40px;
+        letter-spacing: 11px; text-shadow: 0 4px 18px rgba(0,0,0,.6);
+      }
+
+      /* ---------- subtitles ---------- */
+      .subtitle {
+        position: absolute; left: 0; right: 0; bottom: 52px; z-index: 50;
+        display: flex; justify-content: center; pointer-events: none; opacity: 0;
+      }
+      .subtitle span {
+        font-family: var(--font-display); font-size: 40px; line-height: 1.35;
+        color: var(--cream); background: rgba(24, 18, 10, .60);
+        padding: 14px 32px; border-radius: 10px; max-width: 1300px; text-align: center;
+      }
+
+      /* ---------- map labels ---------- */
+      .maplabel {
+        position: absolute; font-family: var(--font-display); color: var(--ink);
+        font-weight: 700; letter-spacing: 4px; opacity: 0; z-index: 5;
+        text-shadow: 0 0 7px rgba(247,239,219,.85), 0 0 3px rgba(247,239,219,.9), 0 1px 0 rgba(247,239,219,.6);
+      }
+      #lbl-norway  { left: 1560px; top: 388px; font-size: 46px; }
+      #lbl-england { left: 122px;  top: 452px; font-size: 44px; }
+      #lbl-sea     { left: 836px;  top: 318px; font-size: 36px; color: #476b8a; letter-spacing: 9px; }
+      #lbl-lind    { left: 706px;  top: 708px; font-size: 30px; color: var(--rust); letter-spacing: 3px; }
+    </style>
+  </head>
+  <body>
+    <div
+      id="root"
+      data-composition-id="main"
+      data-start="0"
+      data-duration="30"
+      data-width="1920"
+      data-height="1080"
+    >
+
+      <!-- ================= SCENE 1 · 0.0–17.2 · monastery cliff, ships in the mist ================= -->
+      <div class="clip" id="scene1" data-start="0" data-duration="17.2" data-track-index="0">
+        <div class="cam" id="cam1"><img class="bg" src="assets/scene1.png" alt="" /></div>
+
+        <img class="layer" id="waveA" src="assets/waveA.png" style="left:0; top:838px; width:3840px; height:190px; opacity:.34" alt="" />
+        <img class="layer" id="waveB" src="assets/waveB.png" style="left:0; top:962px; width:3840px; height:130px; opacity:.45" alt="" />
+
+        <img class="layer" id="mist1" src="assets/mist.png" style="left:-260px; top:268px; width:2300px; opacity:.38" alt="" />
+        <img class="layer" id="mist2" src="assets/mist.png" style="left:300px; top:500px; width:1250px; opacity:.15" alt="" />
+
+        <div class="layer" id="ship1" style="left:0; top:0; width:560px; height:402px;">
+          <div id="ship1bob" style="width:100%; height:100%;">
+            <img src="assets/ship.png" style="width:100%; height:100%; display:block" alt="" />
+          </div>
+        </div>
+
+        <div id="titlecard">
+          <div class="over">JUNE · 793 AD</div>
+          <div class="main">LINDISFARNE</div>
+          <div class="rule"></div>
+          <div class="sub">THE FIRST VIKING RAID</div>
+        </div>
+      </div>
+
+      <!-- ================= SCENE 2 · 16.3–26.0 · the Viking harbour ================= -->
+      <div class="clip" id="scene2" data-start="16.3" data-duration="9.7" data-track-index="1">
+        <div class="cam" id="cam2"><img class="bg" src="assets/scene2.png" alt="" /></div>
+
+        <img class="layer" id="mist3" src="assets/mist.png" style="left:-300px; top:724px; width:1700px; opacity:.24" alt="" />
+
+        <div class="layer" id="ship2" style="left:0; top:0; width:400px; height:287px;">
+          <div id="ship2bob" style="width:100%; height:100%;">
+            <img src="assets/ship_flip.png" style="width:100%; height:100%; display:block" alt="" />
+          </div>
+        </div>
+      </div>
+
+      <!-- ================= SCENE 3 · 25.1–30.0 · the stitched map, Norway to Lindisfarne ================= -->
+      <div class="clip" id="scene3" data-start="25.1" data-duration="4.9" data-track-index="2">
+        <div class="cam" id="cam3"><img class="bg" src="assets/scene3.png" alt="" /></div>
+
+        <svg class="layer" width="1920" height="1080" viewBox="0 0 1920 1080" style="left:0; top:0; z-index:4">
+          <path id="routeBase" d="M 1472 652 C 1310 588, 1090 582, 912 622 C 790 650, 690 672, 600 686"
+                fill="none" stroke="#8a2f23" stroke-width="6" stroke-linecap="round"
+                stroke-dasharray="3 16" opacity=".55" />
+          <path id="routeDraw" d="M 1472 652 C 1310 588, 1090 582, 912 622 C 790 650, 690 672, 600 686"
+                fill="none" stroke="#b3402f" stroke-width="6" stroke-linecap="round" opacity=".95" />
+          <circle id="lindRing" cx="600" cy="686" r="12" fill="none" stroke="#b3402f" stroke-width="5" opacity="0" />
+        </svg>
+
+        <div class="maplabel" id="lbl-norway">NORWAY</div>
+        <div class="maplabel" id="lbl-england">ENGLAND</div>
+        <div class="maplabel" id="lbl-sea">NORTH SEA</div>
+        <div class="maplabel" id="lbl-lind">LINDISFARNE</div>
+
+        <div class="layer" id="mapShip" style="left:0; top:0; width:168px; height:121px; z-index:6; opacity:0;">
+          <img src="assets/ship_flip.png" style="width:100%; height:100%; display:block" alt="" />
+        </div>
+      </div>
+
+      <!-- ================= subtitles (burned in, timed to the voice) ================= -->
+      <div class="subtitle" data-start="2.5" data-duration="6.4"><span>June, 793 AD. On Lindisfarne, a quiet island monastery off England&rsquo;s coast,</span></div>
+      <div class="subtitle" data-start="8.9" data-duration="7.0"><span>monks saw strange ships in the mist &mdash; long, fast, dragon-headed.</span></div>
+      <div class="subtitle" data-start="16.9" data-duration="4.3"><span>They were Vikings &mdash; warriors from Norway who had crossed</span></div>
+      <div class="subtitle" data-start="21.2" data-duration="4.0"><span>four hundred miles of open sea, guided only by the sun, the stars, and seabirds.</span></div>
+
+      <!-- ================= audio ================= -->
+      <audio class="clip" data-start="0" data-duration="30" data-track-index="10" data-volume="0.5" src="assets/bgm.wav"></audio>
+      <audio class="clip" data-start="1.6" data-duration="14.16" data-track-index="11" data-volume="0.85" src="assets/sfx1.wav"></audio>
+      <audio class="clip" data-start="16.26" data-duration="9.43" data-track-index="11" data-volume="0.85" src="assets/sfx2.wav"></audio>
+      <audio class="clip" data-start="2.2" data-duration="13.56" data-track-index="12" data-volume="1.0" src="assets/scene1.mp3"></audio>
+      <audio class="clip" data-start="16.26" data-duration="8.83" data-track-index="12" data-volume="1.0" src="assets/scene2.mp3"></audio>
+
+    </div>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+
+      /* ============ SCENE 1 · monastery cliff ============ */
+      // slow camera push into the tapestry
+      tl.fromTo("#cam1", { scale: 1.03, x: 0, y: 0 }, { scale: 1.10, x: -26, y: -12, duration: 17.2, ease: "none" }, 0);
+
+      // layered wave strips sliding at different speeds (mirror-tiled, seamless loop)
+      tl.fromTo("#waveA", { x: 0 }, { x: -1920, duration: 10, repeat: -1, ease: "none" }, 0);
+      tl.fromTo("#waveB", { x: -1920 }, { x: 0, duration: 7, repeat: -1, ease: "none" }, 0);
+
+      // mist banks drifting across the ships
+      tl.to("#mist1", { x: 240, duration: 12, yoyo: true, repeat: -1, ease: "sine.inOut" }, 0);
+      tl.to("#mist2", { x: -200, duration: 10, yoyo: true, repeat: -1, ease: "sine.inOut" }, 0);
+
+      // the foreground longship sails toward the island, bobbing as it goes
+      tl.set("#ship1", { x: -170, y: 585 }, 0);
+      tl.to("#ship1", { x: 600, duration: 16.6, ease: "none" }, 0.1);
+      tl.to("#ship1bob", { y: -12, rotation: 1.3, transformOrigin: "50% 85%", duration: 1.9, yoyo: true, repeat: -1, ease: "sine.inOut" }, 0.1);
+
+      // title card
+      tl.fromTo("#titlecard .over", { opacity: 0, y: 26 }, { opacity: 1, y: 0, duration: .7, ease: "power2.out" }, .35);
+      tl.fromTo("#titlecard .main", { opacity: 0, y: 44, scale: .94 }, { opacity: 1, y: 0, scale: 1, duration: .9, ease: "power3.out" }, .6);
+      tl.fromTo("#titlecard .rule", { opacity: 0, scaleX: .3 }, { opacity: .85, scaleX: 1, duration: .7, ease: "power2.out" }, .95);
+      tl.fromTo("#titlecard .sub", { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: .7, ease: "power2.out" }, 1.1);
+      tl.to("#titlecard", { opacity: 0, duration: .9, ease: "power1.in" }, 4.6);
+
+      /* ============ SCENE 2 · the harbour ============ */
+      tl.fromTo("#scene2", { opacity: 0 }, { opacity: 1, duration: .9, ease: "power1.out" }, 16.3);
+      tl.fromTo("#cam2", { scale: 1.09, x: -34, y: -8 }, { scale: 1.02, x: 0, y: 0, duration: 9.7, ease: "none" }, 16.3);
+
+      // a longship pulls away from the dock and sails out of frame
+      tl.set("#ship2", { x: 600, y: 795 }, 16.3);
+      tl.to("#ship2", { x: -480, duration: 8.6, ease: "none" }, 16.7);
+      tl.to("#ship2bob", { y: -9, rotation: -1.2, transformOrigin: "50% 85%", duration: 1.7, yoyo: true, repeat: -1, ease: "sine.inOut" }, 16.7);
+
+      tl.to("#mist3", { x: 200, duration: 11, yoyo: true, repeat: -1, ease: "sine.inOut" }, 16.3);
+
+      /* ============ SCENE 3 · the map ============ */
+      tl.fromTo("#scene3", { opacity: 0 }, { opacity: 1, duration: .9, ease: "power1.out" }, 25.1);
+      tl.fromTo("#cam3", { scale: 1.02, transformOrigin: "32% 62%" }, { scale: 1.09, duration: 4.9, ease: "none" }, 25.1);
+
+      tl.fromTo("#lbl-norway", { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: .6, ease: "power2.out" }, 25.7);
+      tl.fromTo("#lbl-england", { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: .6, ease: "power2.out" }, 26.2);
+      tl.fromTo("#lbl-sea", { opacity: 0 }, { opacity: 1, duration: .8, ease: "power1.out" }, 26.7);
+
+      // the route stitches itself across the North Sea…
+      const route = document.getElementById("routeDraw");
+      const RL = route.getTotalLength();
+      route.style.strokeDasharray = RL;
+      route.style.strokeDashoffset = RL;
+      tl.to(route, { strokeDashoffset: 0, duration: 3.5, ease: "power1.inOut" }, 25.9);
+
+      // …and a small longship sails it from Norway to the island
+      tl.set("#mapShip", { x: 1388, y: 556, rotation: -4 }, 25.8);
+      tl.to("#mapShip", { opacity: 1, duration: .3 }, 25.8);
+      tl.to("#mapShip", {
+        keyframes: [
+          { x: 1166, y: 504, rotation: -2, duration: .875, ease: "power1.inOut" },
+          { x: 946,  y: 504, rotation: 0,  duration: .875, ease: "power1.inOut" },
+          { x: 726,  y: 546, rotation: 3,  duration: .875, ease: "power1.inOut" },
+          { x: 516,  y: 590, rotation: 5,  duration: .875, ease: "power1.inOut" }
+        ]
+      }, 25.9);
+      tl.fromTo("#lindRing", { attr: { r: 12 }, opacity: .95 }, { attr: { r: 46 }, opacity: 0, duration: 1.0, ease: "sine.out" }, 29.35);
+      tl.fromTo("#lbl-lind", { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: .5, ease: "power2.out" }, 29.2);
+
+      /* ============ subtitles ============ */
+      const SUBS = [[2.5, 8.9], [8.9, 15.9], [16.9, 21.2], [21.2, 25.2]];
+      document.querySelectorAll(".subtitle").forEach((el, i) => {
+        const [s, e] = SUBS[i];
+        tl.fromTo(el, { opacity: 0 }, { opacity: 1, duration: .25, ease: "power1.out" }, s);
+        tl.to(el, { opacity: 0, duration: .25, ease: "power1.in" }, e - .25);
+      });
+
+      window.__timelines["main"] = tl;
+      tl.seek(0);
+    </script>
+  </body>
+</html>
